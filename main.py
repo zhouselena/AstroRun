@@ -21,7 +21,7 @@ FLOOR_Y = 580
 
 def animate_background():
 
-    for bg_rect in bg_rect_list:
+    for bg_rect in bg_rect_list: # update to animate stars
         bg_rect.x -= 2
         screen.blit(bg_surface, bg_rect)
         if bg_rect.x <= -1280:
@@ -37,7 +37,8 @@ pygame.display.set_caption("Astro Runner")
 clock = pygame.time.Clock()
 font = pygame.font.Font("font/Pixeltype.ttf", 50)
 
-game_active = True
+game_active = False
+screen_number = 0  # 0: intro screen | 1: game OR paused game | 2: end screen
 
 """Sprites"""
 player = pygame.sprite.GroupSingle()
@@ -57,16 +58,34 @@ if __name__ == '__main__':
         """Events"""
 
         for event in pygame.event.get():
+            # Exit upon close
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            # Toggle game active
+            if game_active:
+                print("Active")  # Events to happen when game is active
+            else:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    game_active = True
+                    screen_number = 1
 
         """Game"""
 
-        animate_background()
+        # Intro screen
+        if screen_number == 0:
+            screen.blit(bg_surface, (0, 0))
 
-        player.draw(screen)
-        player.update()
+        # Game
+        if screen_number == 1:
+            animate_background()
+
+            player.draw(screen)
+            player.update()
+
+        # End screen
+        if screen_number == 2:
+            screen.blit(bg_surface, (0, 0))
 
         """Draws all elements, updates everything"""
         pygame.display.update()
