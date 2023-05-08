@@ -5,20 +5,23 @@ Selena Zhou, May 2022
 """
 
 import pygame
+from random import choice
 
 
 """GLOBAL VARS"""
 
 WINDOW_W = 1280
 WINDOW_H = 720
-FLOOR_Y = 540
+FLOOR_Y = 580
 
 
 """HELPER FUNCTIONS"""
 
 
 def make_surf(filename):
-    return pygame.image.load(filename).convert_alpha()
+    initial_surf = pygame.image.load(filename).convert_alpha()
+    scaled_surf = pygame.transform.scale_by(initial_surf, 3)
+    return scaled_surf
 
 
 """PLAYER CLASS"""
@@ -40,4 +43,31 @@ class Player(pygame.sprite.Sprite):
         self.player_frame_index = 0
 
         self.image = self.player_frames[self.player_frame_index]
-        self.rect = self.image.get_rect(midbottom=(200, FLOOR_Y))
+        self.rect = self.image.get_rect(midbottom=(175, FLOOR_Y))
+        self.gravity = 0
+
+    def player_input(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] and self.rect.bottom >= FLOOR_Y:
+            self.gravity = -25
+
+    def apply_gravity(self):
+        self.gravity += 1
+        self.rect.y += self.gravity
+        if self.rect.bottom >= FLOOR_Y:
+            self.rect.bottom = FLOOR_Y
+
+    def animate_frames(self):
+        if self.rect.bottom < FLOOR_Y:
+            self.image = self.player_jump_frame
+            self.player_frame_index = choice([0, 0, 0, 10])
+        else:
+            self.player_frame_index += 0.1
+            if self.player_frame_index >= len(self.player_frames):
+                self.player_frame_index = 0
+            self.image = self.player_frames[int(self.player_frame_index)]
+
+    def update(self):
+        self.player_input()
+        self.apply_gravity()
+        self.animate_frames()
