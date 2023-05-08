@@ -9,6 +9,7 @@ import pygame
 from sys import exit
 from random import randint, choice
 import Player
+import Obstacle
 
 """***************** GLOBAL VARS *****************"""
 
@@ -41,13 +42,22 @@ game_active = False
 screen_number = 0  # 0: intro screen | 1: game OR paused game | 2: end screen
 
 """Sprites"""
+
+# Player
 player = pygame.sprite.GroupSingle()
 player.add(Player.Player())
+
+# Obstacles
+obstacle_group = pygame.sprite.Group()
 
 """Surfaces"""
 bg_rect_list = [pygame.image.load("graphics/background.png").convert().get_rect(topleft=(0, 0)),
                         pygame.image.load("graphics/background.png").convert().get_rect(topleft=(1280, 0))]
 bg_surface = pygame.image.load("graphics/background.png").convert()
+
+"""Timers"""
+obstacle_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(obstacle_timer, 1500)
 
 """***************** MAIN *****************"""
 
@@ -64,7 +74,10 @@ if __name__ == '__main__':
                 exit()
             # Toggle game active
             if game_active:
-                print("Active")  # Events to happen when game is active
+
+                if event.type == obstacle_timer:
+                    obstacle_group.add(Obstacle.Obstacle(choice(['obstacle1', 'obstacle1', 'obstacle1', 'obstacle1', 'obstacle2', 'obstacle2', 'obstacle3'])))
+
             else:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     game_active = True
@@ -82,6 +95,9 @@ if __name__ == '__main__':
 
             player.draw(screen)
             player.update()
+
+            obstacle_group.draw(screen)
+            obstacle_group.update()
 
         # End screen
         if screen_number == 2:

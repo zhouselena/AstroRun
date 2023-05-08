@@ -20,7 +20,7 @@ FLOOR_Y = 580
 
 def make_surf(filename):
     initial_surf = pygame.image.load(filename).convert_alpha()
-    scaled_surf = pygame.transform.scale_by(initial_surf, 3)
+    scaled_surf = pygame.transform.scale_by(initial_surf, 2)
     return scaled_surf
 
 
@@ -39,14 +39,14 @@ class Obstacle(pygame.sprite.Sprite):
             y_pos = FLOOR_Y
         elif type == "obstacle3":
             self.frames = [make_surf("graphics/obstacles/obstacle3_1.png"), make_surf("graphics/obstacles/obstacle3_2.png")]
-            y_pos = FLOOR_Y - 200
+            y_pos = FLOOR_Y - 275
 
         self.animation_index = 0
         self.image = self.frames[self.animation_index]
-        self.rect = self.image.get_rect(center=(randint(1300, 1500), y_pos))
+        self.rect = self.image.get_rect(midbottom=(randint(1300, 1500), y_pos))
 
     def animate_frames(self):
-        self.animation_index += 0.1
+        self.animation_index += 0.05
         if self.animation_index >= len(self.frames):
             self.animation_index = 0
         self.image = self.frames[int(self.animation_index)]
@@ -57,5 +57,5 @@ class Obstacle(pygame.sprite.Sprite):
 
     def update(self):
         self.animate_frames()
-        self.rect.x -= 6
+        self.rect.x -= 9
         self.destroy()
