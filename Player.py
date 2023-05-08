@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
         self.player_frame_index = 0
 
         self.image = self.player_frames[self.player_frame_index]
-        self.rect = self.image.get_rect(midbottom=(175, FLOOR_Y))
+        self.rect = self.image.get_rect(midbottom=(175, FLOOR_Y)).inflate(-30, -10)
         self.gravity = 0
 
     def player_input(self):
