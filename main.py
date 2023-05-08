@@ -10,7 +10,6 @@ from sys import exit
 from random import randint, choice
 import Player
 import Obstacle
-import Button
 
 """***************** GLOBAL VARS *****************"""
 
@@ -55,11 +54,9 @@ screen_number = 0  # 0: intro screen | 1: game OR paused game | 2: end screen
 """Sprites"""
 
 # Buttons
-pause_button = pygame.sprite.GroupSingle()
-pause_button.add(Button.Button("graphics/buttons/pause_button.png"))
-play_button = pygame.sprite.GroupSingle()
-play_button.add(Button.Button("graphics/buttons/play_button.png"))
-button_rect = pause_button.sprite.rect
+pause_button = pygame.image.load("graphics/buttons/pause_button.png").convert_alpha()
+play_button = pygame.image.load("graphics/buttons/play_button.png").convert_alpha()
+button_rect = pause_button.get_rect(topright=(WINDOW_W-10, 20))
 
 # Player
 player = pygame.sprite.GroupSingle()
@@ -119,7 +116,7 @@ if __name__ == '__main__':
 
             if game_active:
                 animate_background()
-                pause_button.draw(screen)
+                screen.blit(pause_button, button_rect)
 
                 player.draw(screen)
                 player.update()
@@ -131,7 +128,7 @@ if __name__ == '__main__':
 
             else:
                 animate_background()
-                play_button.draw(screen)
+                screen.blit(play_button, button_rect)
                 player.draw(screen)
                 obstacle_group.draw(screen)
 
