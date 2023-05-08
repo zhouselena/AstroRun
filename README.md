@@ -13,6 +13,7 @@ It features a little astronaut creature trying to avoid asteroids and other spac
 ## Purpose
 
 The purpose of this game is to extend my knowledge of PyGame and get more familiar with coding 2D games.
+Furthermore, to practice creating graphics using visual design softwares.
 
 ## Gameplay
 
