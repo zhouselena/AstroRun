@@ -10,6 +10,7 @@ from sys import exit
 from random import randint, choice
 import Player
 import Obstacle
+import Button
 
 """***************** GLOBAL VARS *****************"""
 
@@ -29,6 +30,16 @@ def animate_background():
             bg_rect.x = 1280
 
 
+def calculate_collisions():
+    global screen_number
+    if pygame.sprite.spritecollide(player.sprite, obstacle_group, False):
+        obstacle_group.empty()
+        screen_number = 2
+        return False
+    else:
+        return True
+
+
 """***************** INITIALIZE GAME *****************"""
 
 pygame.init()
@@ -42,6 +53,13 @@ game_active = False
 screen_number = 0  # 0: intro screen | 1: game OR paused game | 2: end screen
 
 """Sprites"""
+
+# Buttons
+pause_button = pygame.sprite.GroupSingle()
+pause_button.add(Button.Button("graphics/buttons/pause_button.png"))
+play_button = pygame.sprite.GroupSingle()
+play_button.add(Button.Button("graphics/buttons/play_button.png"))
+button_rect = pause_button.sprite.rect
 
 # Player
 player = pygame.sprite.GroupSingle()
@@ -72,9 +90,10 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+
             # Toggle game active
             if game_active:
-
+                # Continually generate obstacles
                 if event.type == obstacle_timer:
                     obstacle_group.add(Obstacle.Obstacle(choice(['obstacle1', 'obstacle1', 'obstacle1', 'obstacle1', 'obstacle2', 'obstacle2', 'obstacle3'])))
 
@@ -83,6 +102,12 @@ if __name__ == '__main__':
                     game_active = True
                     screen_number = 1
 
+            # Play or Pause
+            if screen_number == 1:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if button_rect.collidepoint(event.pos):
+                        game_active = not game_active
+
         """Game"""
 
         # Intro screen
@@ -90,18 +115,31 @@ if __name__ == '__main__':
             screen.blit(bg_surface, (0, 0))
 
         # Game
-        if screen_number == 1:
-            animate_background()
+        elif screen_number == 1:
 
-            player.draw(screen)
-            player.update()
+            if game_active:
+                animate_background()
+                pause_button.draw(screen)
 
-            obstacle_group.draw(screen)
-            obstacle_group.update()
+                player.draw(screen)
+                player.update()
+
+                obstacle_group.draw(screen)
+                obstacle_group.update()
+
+                game_active = calculate_collisions()
+
+            else:
+                animate_background()
+                play_button.draw(screen)
+                player.draw(screen)
+                obstacle_group.draw(screen)
 
         # End screen
-        if screen_number == 2:
+        else:
+            player_surf = pygame.image.load("graphics/player/player_1.png").convert_alpha()
             screen.blit(bg_surface, (0, 0))
+            screen.blit(player_surf, player_surf.get_rect())
 
         """Draws all elements, updates everything"""
         pygame.display.update()
