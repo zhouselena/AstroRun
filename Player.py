@@ -58,7 +58,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = FLOOR_Y
 
     def animate_frames(self):
-        if self.rect.bottom < FLOOR_Y:
+        if self.rect.bottom < FLOOR_Y-10:
             self.image = self.player_jump_frame
             self.player_frame_index = choice([0, 0, 0, 10])
         else:

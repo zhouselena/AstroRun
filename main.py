@@ -39,21 +39,17 @@ def intro_screen():
     if title_player_rect.centery > 450 and rising:
         title_player_rect.centery -= 1
         if title_player_rect.centery == 450:
-            print("hi")
             rising = False
     else:
         title_player_rect.centery += 1
         if title_player_rect.centery == 550:
             rising = True
 
-
-
     if pygame.MOUSEBUTTONDOWN and title_button_rect.collidepoint(pygame.mouse.get_pos()):
         screen.blit(title_button_pressed, title_button_rect)
 
 
 def end_screen():
-    global score
 
     screen.blit(bg_surface, (0, 0))
     screen.blit(title_button, title_button_rect)
@@ -71,8 +67,6 @@ def end_screen():
     screen.blit(game_over_msg, game_over_msg_rect)
 
     player.draw(screen)
-
-    score = 0
 
 
 def calculate_collisions():
@@ -111,6 +105,9 @@ screen_number = 0  # 0: intro screen | 1: game OR paused game | 2: end screen
 pause_button = pygame.image.load("graphics/buttons/pause_button.png").convert_alpha()
 play_button = pygame.image.load("graphics/buttons/play_button.png").convert_alpha()
 button_rect = pause_button.get_rect(topright=(WINDOW_W-10, 20))
+
+home_button = pygame.image.load("graphics/buttons/home_button.png").convert_alpha()
+home_button_rect = pause_button.get_rect(topleft=(10, 20))
 
 # Player
 player = pygame.sprite.GroupSingle()
@@ -161,6 +158,10 @@ if __name__ == '__main__':
 
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN and title_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    player.sprite.kill()
+                    player.add(Player.Player())
+                    obstacle_group.empty()
+                    score = 0
                     game_active = True
                     screen_number = 1
 
@@ -169,6 +170,9 @@ if __name__ == '__main__':
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if button_rect.collidepoint(event.pos):
                         game_active = not game_active
+                    if home_button_rect.collidepoint(event.pos):
+                        game_active = False
+                        screen_number = 0
 
         """Game"""
 
@@ -182,6 +186,7 @@ if __name__ == '__main__':
             if game_active:
                 animate_background()
                 screen.blit(pause_button, button_rect)
+                screen.blit(home_button, home_button_rect)
                 score = display_score()
 
                 player.draw(screen)
@@ -196,6 +201,7 @@ if __name__ == '__main__':
                 animate_background()
                 score = display_score()
                 screen.blit(play_button, button_rect)
+                screen.blit(home_button, home_button_rect)
                 player.draw(screen)
                 obstacle_group.draw(screen)
 
