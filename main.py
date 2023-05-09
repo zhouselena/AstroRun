@@ -7,7 +7,7 @@ Selena Zhou, May 2022
 
 import pygame
 from sys import exit
-from random import randint, choice
+from random import choice
 import Player
 import Obstacle
 
@@ -27,6 +27,19 @@ def animate_background():
         screen.blit(bg_surface, bg_rect)
         if bg_rect.x <= -1280:
             bg_rect.x = 1280
+
+
+def intro_screen():
+
+    title_screen = pygame.transform.scale_by(pygame.image.load("graphics/intro_screen/title_screen.png").convert(), 2)
+    title_player = [pygame.transform.scale_by(pygame.image.load("graphics/player/player_1.png").convert_alpha(), 3),
+                    pygame.transform.scale_by(pygame.image.load("graphics/player/player_3.png").convert_alpha(), 3)]
+
+    screen.blit(title_screen, (0, 0))
+    screen.blit(title_button, title_button_rect)
+
+    if pygame.MOUSEBUTTONDOWN and title_button_rect.collidepoint(pygame.mouse.get_pos()):
+        screen.blit(title_button_pressed, title_button_rect)
 
 
 def calculate_collisions():
@@ -70,6 +83,13 @@ bg_rect_list = [pygame.image.load("graphics/background.png").convert().get_rect(
                         pygame.image.load("graphics/background.png").convert().get_rect(topleft=(1280, 0))]
 bg_surface = pygame.image.load("graphics/background.png").convert()
 
+# Intro Screen
+title_button = pygame.transform.scale_by(pygame.image.load("graphics/intro_screen/play_button.png").convert_alpha(),
+                                         1.5)
+title_button_pressed = pygame.transform.scale_by(
+    pygame.image.load("graphics/intro_screen/play_button_pressed.png").convert_alpha(), 1.5)
+title_button_rect = title_button.get_rect(midbottom=(WINDOW_W / 2, 600))
+
 """Timers"""
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 1500)
@@ -109,7 +129,7 @@ if __name__ == '__main__':
 
         # Intro screen
         if screen_number == 0:
-            screen.blit(bg_surface, (0, 0))
+            intro_screen()
 
         # Game
         elif screen_number == 1:
