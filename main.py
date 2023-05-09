@@ -115,7 +115,7 @@ if __name__ == '__main__':
                     obstacle_group.add(Obstacle.Obstacle(choice(['obstacle1', 'obstacle1', 'obstacle1', 'obstacle1', 'obstacle2', 'obstacle2', 'obstacle3'])))
 
             else:
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                if event.type == pygame.MOUSEBUTTONDOWN and title_button_rect.collidepoint(pygame.mouse.get_pos()):
                     game_active = True
                     screen_number = 1
 
