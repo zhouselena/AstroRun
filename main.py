@@ -7,7 +7,7 @@ Selena Zhou, May 2022
 
 import pygame
 from sys import exit
-from random import choice
+from random import randint, choice
 import Player
 import Obstacle
 
@@ -27,13 +27,6 @@ def animate_background():
         screen.blit(bg_surface, bg_rect)
         if bg_rect.x <= -1280:
             bg_rect.x = 1280
-
-
-def intro_screen():
-    title_screen = pygame.image.load("graphics/title_screen_1.png").convert()
-    title_player = [pygame.transform.scale_by(pygame.image.load("graphics/player/player_1.png").convert_alpha(), 3),
-                    pygame.transform.scale_by(pygame.image.load("graphics/player/player_3.png").convert_alpha(), 3)]
-
 
 
 def calculate_collisions():
