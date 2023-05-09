@@ -8,8 +8,6 @@
 Astro Runner is a 2D platformer game written on PyGame.
 It features a little astronaut creature trying to avoid asteroids and other space-related obstacles.
 
-![screencap of gameplay](gameplay/intro_screen.png "intro screen")
-
 ### Demo Video
 
 https://user-images.githubusercontent.com/58157434/236994905-ffb2ff59-e6f6-4596-8f56-d1aafe882627.mov
@@ -23,6 +21,7 @@ Furthermore, to practice creating graphics using visual design softwares.
 
 ## Gameplay
 
+![screencap of gameplay](gameplay/intro_screen.png "intro screen")
 ![screencap of gameplay](gameplay/game1.png "gameplay")
 ![screencap of gameplay](gameplay/game1.png "gameplay")
 ![screencap of gameplay](gameplay/end_screen.png "end screen")
