@@ -135,6 +135,10 @@ rising = True
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 1500)
 
+"""Music"""
+bg_music = pygame.mixer.Sound("audio/play_music.wav")
+bg_music.play(loops=-1)
+
 """***************** MAIN *****************"""
 
 if __name__ == '__main__':
@@ -184,6 +188,7 @@ if __name__ == '__main__':
         elif screen_number == 1:
 
             if game_active:
+
                 animate_background()
                 screen.blit(pause_button, button_rect)
                 screen.blit(home_button, home_button_rect)
@@ -198,6 +203,7 @@ if __name__ == '__main__':
                 game_active = calculate_collisions()
 
             else:
+
                 animate_background()
                 score = display_score()
                 screen.blit(play_button, button_rect)
