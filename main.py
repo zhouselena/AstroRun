@@ -30,13 +30,23 @@ def animate_background():
 
 
 def intro_screen():
-
-    title_screen = pygame.transform.scale_by(pygame.image.load("graphics/intro_screen/title_screen.png").convert(), 2)
-    title_player = [pygame.transform.scale_by(pygame.image.load("graphics/player/player_1.png").convert_alpha(), 3),
-                    pygame.transform.scale_by(pygame.image.load("graphics/player/player_3.png").convert_alpha(), 3)]
+    global rising
 
     screen.blit(title_screen, (0, 0))
     screen.blit(title_button, title_button_rect)
+    screen.blit(title_player, title_player_rect)
+
+    if title_player_rect.centery > 450 and rising:
+        title_player_rect.centery -= 1
+        if title_player_rect.centery == 450:
+            print("hi")
+            rising = False
+    else:
+        title_player_rect.centery += 1
+        if title_player_rect.centery == 550:
+            rising = True
+
+
 
     if pygame.MOUSEBUTTONDOWN and title_button_rect.collidepoint(pygame.mouse.get_pos()):
         screen.blit(title_button_pressed, title_button_rect)
@@ -115,11 +125,14 @@ bg_rect_list = [pygame.image.load("graphics/background.png").convert().get_rect(
 bg_surface = pygame.image.load("graphics/background.png").convert()
 
 # Intro Screen
-title_button = pygame.transform.scale_by(pygame.image.load("graphics/intro_screen/play_button.png").convert_alpha(),
-                                         1.5)
-title_button_pressed = pygame.transform.scale_by(
-    pygame.image.load("graphics/intro_screen/play_button_pressed.png").convert_alpha(), 1.5)
+title_button = pygame.transform.scale_by(pygame.image.load("graphics/intro_screen/play_button.png").convert_alpha(), 1.5)
+title_button_pressed = pygame.transform.scale_by(pygame.image.load("graphics/intro_screen/play_button_pressed.png").convert_alpha(), 1.5)
 title_button_rect = title_button.get_rect(midbottom=(WINDOW_W / 2, 600))
+
+title_screen = pygame.transform.scale_by(pygame.image.load("graphics/intro_screen/title_screen.png").convert(), 2)
+title_player = pygame.transform.scale_by(pygame.image.load("graphics/player/player_jump.png").convert_alpha(), 4)
+title_player_rect = title_player.get_rect(center=(200, 500))
+rising = True
 
 """Timers"""
 obstacle_timer = pygame.USEREVENT + 1
