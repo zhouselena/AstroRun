@@ -42,6 +42,29 @@ def intro_screen():
         screen.blit(title_button_pressed, title_button_rect)
 
 
+def end_screen():
+    global score
+
+    screen.blit(bg_surface, (0, 0))
+    screen.blit(title_button, title_button_rect)
+
+    if pygame.MOUSEBUTTONDOWN and title_button_rect.collidepoint(pygame.mouse.get_pos()):
+        screen.blit(title_button_pressed, title_button_rect)
+
+    score_message = font.render(f'Your score: {score}', False, (203, 195, 227))
+    score_message_rect = score_message.get_rect(center=(WINDOW_W/2, 350))
+    screen.blit(score_message, score_message_rect)
+
+    game_over_font = pygame.font.Font("font/Pixeltype.ttf", 200)
+    game_over_msg = game_over_font.render("GAME OVER", False, (0, 0, 0))
+    game_over_msg_rect = game_over_msg.get_rect(center=(WINDOW_W/2, 200))
+    screen.blit(game_over_msg, game_over_msg_rect)
+
+    player.draw(screen)
+
+    score = 0
+
+
 def calculate_collisions():
     global screen_number
     if pygame.sprite.spritecollide(player.sprite, obstacle_group, False):
@@ -52,6 +75,13 @@ def calculate_collisions():
         return True
 
 
+def display_score():
+    score_surface = font.render(f'Score: {score}', False, (203, 195, 227))
+    score_rect = score_surface.get_rect(center=(WINDOW_W/2, 100))
+    screen.blit(score_surface, score_rect)
+    return score
+
+
 """***************** INITIALIZE GAME *****************"""
 
 pygame.init()
@@ -59,7 +89,8 @@ screen = pygame.display.set_mode((WINDOW_W, WINDOW_H))
 pygame.display.set_caption("Astro Runner")
 
 clock = pygame.time.Clock()
-font = pygame.font.Font("font/Pixeltype.ttf", 50)
+score = 0
+font = pygame.font.Font("font/Pixeltype.ttf", 70)
 
 game_active = False
 screen_number = 0  # 0: intro screen | 1: game OR paused game | 2: end screen
@@ -113,6 +144,7 @@ if __name__ == '__main__':
                 # Continually generate obstacles
                 if event.type == obstacle_timer:
                     obstacle_group.add(Obstacle.Obstacle(choice(['obstacle1', 'obstacle1', 'obstacle1', 'obstacle1', 'obstacle2', 'obstacle2', 'obstacle3'])))
+                    score += 1
 
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN and title_button_rect.collidepoint(pygame.mouse.get_pos()):
@@ -137,6 +169,7 @@ if __name__ == '__main__':
             if game_active:
                 animate_background()
                 screen.blit(pause_button, button_rect)
+                score = display_score()
 
                 player.draw(screen)
                 player.update()
@@ -148,15 +181,14 @@ if __name__ == '__main__':
 
             else:
                 animate_background()
+                score = display_score()
                 screen.blit(play_button, button_rect)
                 player.draw(screen)
                 obstacle_group.draw(screen)
 
         # End screen
         else:
-            player_surf = pygame.image.load("graphics/player/player_1.png").convert_alpha()
-            screen.blit(bg_surface, (0, 0))
-            screen.blit(player_surf, player_surf.get_rect())
+            end_screen()
 
         """Draws all elements, updates everything"""
         pygame.display.update()
