@@ -23,7 +23,7 @@ Furthermore, to practice creating graphics using visual design softwares.
 
 ![screencap of gameplay](gameplay/intro_screen.png "intro screen")
 ![screencap of gameplay](gameplay/game1.png "gameplay")
-![screencap of gameplay](gameplay/game1.png "gameplay")
+![screencap of gameplay](gameplay/game2.png "gameplay")
 ![screencap of gameplay](gameplay/end_screen.png "end screen")
 
 ## Tags
