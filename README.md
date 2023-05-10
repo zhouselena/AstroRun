@@ -10,9 +10,9 @@ It features a little astronaut creature trying to avoid asteroids and other spac
 
 ### Demo Video
 
-https://user-images.githubusercontent.com/58157434/236994905-ffb2ff59-e6f6-4596-8f56-d1aafe882627.mov
+https://github.com/zhouselena/AstroRun/assets/58157434/266caf36-e1b0-4c10-bca9-76c8b43e464a
 
-> Also available on YouTube at [https://youtu.be/OxcauGfuwWE](https://youtu.be/RXKhX07HA6k) for better music syncing.
+> Also available on YouTube at https://youtu.be/m-zov1WwI4A for better music syncing.
 
 ## Purpose
 
