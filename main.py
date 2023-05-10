@@ -36,6 +36,14 @@ def intro_screen():
     screen.blit(title_button, title_button_rect)
     screen.blit(title_player, title_player_rect)
 
+    instructions_font = pygame.font.Font("font/Pixeltype.ttf", 45)
+    instructions_1 = instructions_font.render("How to play:", False, (255, 255, 255))
+    instructions_2 = instructions_font.render("Press SPACE to jump", False, (255, 255, 255))
+    instructions_3 = instructions_font.render("Dodge the obstacles!", False, (255, 255, 255))
+    screen.blit(instructions_1, instructions_1.get_rect(center=(1050, 450)))
+    screen.blit(instructions_2, instructions_2.get_rect(center=(1050, 500)))
+    screen.blit(instructions_3, instructions_3.get_rect(center=(1050, 550)))
+
     if title_player_rect.centery > 450 and rising:
         title_player_rect.centery -= 1
         if title_player_rect.centery == 450:
