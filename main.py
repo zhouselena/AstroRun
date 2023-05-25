@@ -2,7 +2,7 @@
 Astro Runner
 2D platformer game written in Python with PyGame.
 
-Selena Zhou, May 2022
+Selena Zhou, May 2023
 """
 
 import pygame

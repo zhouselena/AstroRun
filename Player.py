@@ -1,7 +1,7 @@
 """
 Astro Runner: Player sprite class
 
-Selena Zhou, May 2022
+Selena Zhou, May 2023
 """
 
 import pygame
